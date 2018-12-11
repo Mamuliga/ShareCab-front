@@ -5,12 +5,12 @@ import { DriverHomeComponent } from "./driver-home/driver-home.component";
 
 @Injectable()
 export class AuthService {
-  private _registerUrl = "http://localhost:3000/api/register";
-  private _loginUrl = "http://localhost:3000/api/login";
+  private _registerUrl = "https://sharecab123.herokuapp.com/api/register";
+  private _loginUrl = "https://sharecab123.herokuapp.com/api/login";
 
-  private _eventsUrl = "http://localhost:3000/api/events";
-  private _ridesUrl = "http://localhost:3000/api/rides";
-  private _userUrl = "http://localhost:3000/api/users/";
+  private _eventsUrl = "https://sharecab123.herokuapp.com/api/events";
+  private _ridesUrl = "https://sharecab123.herokuapp.com/api/rides";
+  private _userUrl = "https://sharecab123.herokuapp.com/api/users/";
   constructor(private http: HttpClient) {}
 
   registerUser(user) {
