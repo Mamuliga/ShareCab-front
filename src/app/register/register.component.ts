@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   registrationFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
 
-   
+   // err
   ngOnInit() {
   }
 
