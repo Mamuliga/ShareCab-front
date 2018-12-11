@@ -1,0 +1,100 @@
+<div class="tab">
+  <div class="container-fluid">
+    <h1 class="text-center">Make your Ride Now!</h1>
+    <div class="row">
+      <div class="col-md-8">
+        <!--
+          <div [hidden]="autocompleteItems.length == 0">
+            <div
+              *ngFor="let item of autocompleteItems"
+              tappable
+              (click)="selectSearchResult(item)"
+            >
+              {{ item.description }}
+            </div>
+          </div>
+          Total Distance: <span id="total"></span>
+          <div #map id="map"></div>
+        -->
+        <!--
+          <button
+            id="distance"
+            (click)="calculateDistance()"
+            type="button"
+            class="btn btn-primary float-right"
+          >
+            Display distance
+          </button>
+
+          <button
+            id="point"
+            (click)="calculateDuration()"
+            type="button"
+            class="btn btn-primary float-right"
+          >
+            Display duration
+          </button>
+        -->
+
+        <!-- smartphone -->
+
+        <!-- tablet -->
+
+        <!-- <div class="tablet-portrait"> -->
+
+        <!--
+          </div>
+          <div class="form-group">
+            <input placeholder="search for Destination" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+              class="form-control" #search [formControl]="searchControl">
+
+
+          </div>
+        -->
+        <div class="form-group">
+          <input
+            placeholder="search for Destination"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="off"
+            type="text"
+            class="form-control"
+            #search
+            [formControl]="searchControl"
+          />
+
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+            <agm-direction
+              *ngIf="destination.lat !== null"
+              [origin]="{ lat: this.lat, lng: this.lng }"
+              [destination]="{
+                lat: this.destination.lat,
+                lng: this.destination.lng
+              }"
+            >
+            </agm-direction>
+
+            <agm-marker
+              *ngIf="destination.lat === null"
+              [latitude]="lat"
+              [longitude]="lng"
+              iconUrl="images/as.png"
+            ></agm-marker>
+          </agm-map>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="destination.lat">
+        <button class="btn btn-primary" (click)="getDetails()">Details</button>
+        <div
+          [hidden]="!showDetails"
+          class="bg-primary text-light p-3"
+          id="details-banner"
+        >
+          <p id="duration"></p>
+          <p id="distance"></p>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+  </div>
+</div>
