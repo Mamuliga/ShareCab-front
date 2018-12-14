@@ -2,15 +2,23 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { DriverHomeComponent } from "./driver-home/driver-home.component";
+import { post } from "selenium-webdriver/http";
 
 @Injectable()
 export class AuthService {
-  private _registerUrl = "https://sharecab123.herokuapp.com/api/register";
-  private _loginUrl = "https://sharecab123.herokuapp.com/api/login";
+  private _registerUrl = "http://localhost:3000/api/register";
+  private _loginUrl = "http://localhost:3000/api/login";
 
-  private _eventsUrl = "https://sharecab123.herokuapp.com/api/events";
-  private _ridesUrl = "https://sharecab123.herokuapp.com/api/rides";
-  private _userUrl = "https://sharecab123.herokuapp.com/api/users/";
+  private _eventsUrl = "http://localhost:3000/api/events";
+  private _ridesUrl = "http://localhost:3000/api/rides";
+  private _userUrl = "http://localhost:3000/api/users/";
+  private _rideUrl = "http://localhost:3000/api/ridesd";
+  // private _registerUrl = "https://sharecab123.herokuapp.com/api/register";
+  // private _loginUrl = "https://sharecab123.herokuapp.com/api/login";
+
+  // private _eventsUrl = "https://sharecab123.herokuapp.com/api/events";
+  // private _ridesUrl = "https://sharecab123.herokuapp.com/api/rides";
+  // private _userUrl = "https://sharecab123.herokuapp.com/api/users/";
   constructor(private http: HttpClient) {}
 
   registerUser(user) {
@@ -53,10 +61,15 @@ export class AuthService {
   }
   getAddress(lat, lng) {
     return this.http.get(
-      // "https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyBKqcDhVxwYY-rc63W8PhFg8BwvAGEeVLo"
-      `https://eu1.locationiq.com/v1/reverse.php?key=6939bb17fa5a3e&lat=${lat}&lon=${lng}&format=json`
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBKqcDhVxwYY-rc63W8PhFg8BwvAGEeVLo`
+
+      // `https://eu1.locationiq.com/v1/reverse.php?key=6939bb17fa5a3e&lat=${lat}&lon=${lng}&format=json`
     );
   }
+  postRides(obj) {
+    return this.http.post<any>(this._rideUrl, obj);
+  }
+
   // getPrice() {
   //   return this.http.get(
 

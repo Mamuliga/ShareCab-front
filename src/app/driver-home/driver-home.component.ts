@@ -12,9 +12,10 @@ import { MapsAPILoader, AgmMap } from "@agm/core";
 export class DriverHomeComponent implements OnInit {
   lat: number = null;
   lng: number = null;
+  riders = [];
   // lats = 36;
   // lons = -94;
-  addr = null;
+  addr = [];
   routes = null;
   contentString;
   zoom: number = 4;
@@ -51,18 +52,18 @@ export class DriverHomeComponent implements OnInit {
       (res: [any]) => {
         console.log(res);
         this.routes = res;
-        this.addr = res.forEach(r => {
+        res.forEach(r => {
           this.authService.getAddress(r.origin.lat, r.origin.lng).subscribe(
-            res => {
-              console.log(res);
+            od => {
+              console.log(od);
               this.authService
                 .getAddress(r.destination.lat, r.destination.lng)
                 .subscribe(
-                  res => {
-                    console.log(res);
+                  dd => {
+                    console.log(dd);
                     this.authService.getOneUser(r.user).subscribe(
-                      res => {
-                        console.log(res);
+                      ud => {
+                        this.addr.push({ od, dd, ud, r });
                       },
                       err => {
                         console.log(err);
@@ -79,7 +80,7 @@ export class DriverHomeComponent implements OnInit {
             }
           );
         });
-        // console.log(this.addr);
+        console.log(this.addr);
         // this.authService.getAddress(this.lat, this.lng).subscribe(
         //   res => {
         //     console.log({ res });
@@ -91,6 +92,44 @@ export class DriverHomeComponent implements OnInit {
       },
       err => {
         console.log(err);
+      }
+    );
+  }
+  onChangeCategory(isChecked, a: any) {
+    // Use appropriate model type instead of any
+
+    if (isChecked) {
+      this.riders.push(a);
+      console.log(this.riders);
+    } else {
+      let index = this.riders.indexOf(a);
+      this.riders.splice(index, 1);
+    }
+  }
+  onClicked() {
+    let did = this.authService.getCurrentUser().uid;
+    const obj = {
+      driver: did,
+      riders: this.riders.map(({ r }) => r.user),
+      origins: this.riders.map(({ r }) => ({
+        lat: r.origin.lat,
+        lng: r.origin.lng,
+        uid: r.user
+      })),
+      destinations: this.riders.map(({ r }) => ({
+        lat: r.destination.lat,
+        lng: r.destination.lng,
+        uid: r.user
+      })),
+      price: 100
+    };
+    console.log(obj);
+    this.authService.postRides(obj).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err.error);
       }
     );
   }
